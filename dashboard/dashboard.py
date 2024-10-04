@@ -15,7 +15,7 @@ st.sidebar.title("Info")
 st.sidebar.markdown("---")
 st.sidebar.write("**Nama:** Dzaky Muhammad Zidane")
 st.sidebar.write("**E-mail:** acelolik09@gmail.com")
-st.sidebar.write("**ID Dicoding:** Dzaky Muhammad Zidane")
+st.sidebar.write("**ID Dicoding:** dzaky_zidan_09cg")
 st.sidebar.markdown("---")
 
 # Main header
