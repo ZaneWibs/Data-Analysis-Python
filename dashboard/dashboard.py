@@ -8,7 +8,7 @@ sns.set(style='dark')
 st.set_page_config(page_title="Analisis Data Set Bike Sharing")
 
 # Memuat data
-df = pd.read_csv('./day.csv')
+df = pd.read_csv('data/day.csv')
 
 # Sidebar untuk identitas
 st.sidebar.title("Info")
