@@ -37,9 +37,9 @@ if visualization == "Bagaimana pengaruh musim terhadap jumlah transaksi bike sha
     season_year_cnt = df.groupby(['season', 'yr'])['cnt'].sum().unstack()
     season_year_cnt.plot(kind='line', figsize=(10, 6))
 
-    plt.title('Jumlah Total Transaksi Bike Sharing per Musim (Tahun 2011 & 2012)')
+    plt.title('Jumlah Transaksi Bike Sharing setiap Musim (Tahun 2011 & 2012)')
     plt.xlabel('Musim')
-    plt.ylabel('Jumlah Total Transaksi')
+    plt.ylabel('Jumlah Transaksi')
     plt.xticks([1, 2, 3, 4], ['Musim Semi', 'Musim Panas', 'Musim Gugur', 'Musim Dingin'])
     plt.legend(['2011', '2012'])
     st.pyplot(plt)
@@ -50,15 +50,19 @@ if visualization == "Bagaimana pengaruh musim terhadap jumlah transaksi bike sha
 elif visualization == "Bagaimana cuaca mempengaruhi jumlah pengguna, baik casual dan registered?":
     st.subheader("Bagaimana cuaca mempengaruhi jumlah pengguna, baik casual dan registered?")
 
+# Manual grouping untuk kondisi cuaca
     weather_labels = {
         1: 'Cerah',
         2: 'Berkabut',
         3: 'Salju Ringan/Hujan Ringan'
     }
+
     df['weather_label'] = df['weathersit'].map(weather_labels)
 
+    # Menghitung rata-rata peminjaman berdasarkan kategori cuaca
     avg_rentals = df.groupby('weather_label').agg({'casual': 'mean', 'registered': 'mean'}).reset_index()
 
+    # Visualisasi data dengan bar plot
     plt.figure(figsize=(12, 6))
     avg_rentals.set_index('weather_label').plot(kind='bar', stacked=False, color=['#66c2a5', '#fc8d62'])
     plt.title('Rata-rata Peminjaman Sepeda berdasarkan Kondisi Cuaca')
@@ -74,15 +78,18 @@ elif visualization == "Bagaimana cuaca mempengaruhi jumlah pengguna, baik casual
 elif visualization == "Seberapa besar pengaruh temperatur terhadap jumlah total transaksi bike sharing?":
     st.subheader("Seberapa besar pengaruh temperatur terhadap jumlah total transaksi bike sharing?")
 
+    # Binning temperature
     df['temp_bin'] = pd.cut(df['temp'], bins=[0, 0.3, 0.6, 1], labels=['Rendah', 'Sedang', 'Tinggi'])
+
+    # Menghitumg rata-rata total peminjaman berdasarkan kategori temperatur
     temp_analysis = df.groupby('temp_bin', observed=True)['cnt'].mean().reset_index()
 
     plt.figure(figsize=(10, 6))
-    sns.barplot(x='temp_bin', y='cnt', data=temp_analysis, palette='coolwarm')
-    plt.title('Rata-rata total peminjaman berdasarkan kategori temperatur')
-    plt.xlabel('Kategori Temperatur')
-    plt.ylabel('Rata-rata Total Peminjaman')
-    plt.tight_layout()
+    sns.barplot(x='temp_bin', y='cnt', hue='temp_bin', data=temp_analysis, palette='coolwarm', dodge=False, legend=False)
+    plt.title('Rata-rata total peminjaman berdasarkan temperaturnya')
+    plt.xlabel('Temperatur')
+    plt.ylabel('Rata-rata jumlah peminjaman')
+    plt.legend([],[], frameon=False)
     st.pyplot(plt)
 
     st.caption("Transaksi peminjaman sepeda lebih banyak ketika temperatur tinggi, diikuti temperatur sedang, dan paling sedikit saat temperatur rendah.")
