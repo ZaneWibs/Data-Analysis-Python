@@ -11,7 +11,7 @@ st.set_page_config(page_title="Analisis Data Set Bike Sharing")
 df = pd.read_csv('./day.csv')
 
 # Sidebar untuk identitas
-st.sidebar.title("Informasi Pengguna")
+st.sidebar.title("Info")
 st.sidebar.markdown("---")
 st.sidebar.write("**Nama:** Dzaky Muhammad Zidane")
 st.sidebar.write("**E-mail:** acelolik09@gmail.com")
